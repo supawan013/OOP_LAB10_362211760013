@@ -1,9 +1,11 @@
 import java.util.List;
 
 public interface EmployeeDAO {
+
+    //CRUD Operation
     public List<Employee> getAllEmp();
-    public void addEmp(Employee newEmp);
-    public void updateEmp(Employee emp);
-    public void deleteEmp(int id);
-    public Employee findEmp(int id);
+    public void addEmp(Employee emp);
+    public Employee findById(String id);
+    public void UpdateEmp(Employee employee);
+    public void deleteEmp(String id);
 }
