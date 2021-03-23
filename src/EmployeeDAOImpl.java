@@ -14,8 +14,12 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     public static final String ADD_NEW_EMP = "insert into Employee (emp_id,name,position,email,salary) " +
             "values(?,?,?,?,?)";
     public static final String FIND_EMP_BY_ID = "select * from Employee where emp_id = ?";
-
-
+    public static final String UPDATE_EMP = "update Employee"+
+            "set name= ?,"+
+            "position= ?,"+
+            "email= ?, "+
+            "salary= ?, "+
+            "where emp_id = ?,";
 
     //Create Instants
     private static EmployeeDAOImpl instance = new EmployeeDAOImpl();
@@ -121,6 +125,30 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void UpdateEmp(Employee employee) {
+        try {
+            conn = DriverManager.getConnection(url);
+            PreparedStatement ps = conn.prepareStatement(UPDATE_EMP);
+            //set par
+            ps.setString(1,employee.getName());
+            ps.setString(2,employee.getPosition());
+            ps.setString(3,employee.getEmail());
+            ps.setDouble(4,employee.getSalary());
+            ps.setString(5,employee.getEmp_id());
+
+            int rs = ps.executeUpdate(); //return 0 or 1
+            if (rs !=0){//update
+                System.out.println("Employee with id"+employee.getEmp_id()+"was updated.");
+            }else { //not update
+                System.out.println("Could not update employee with id"+employee.getEmp_id());
+            }
+            //close connection
+            ps.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class CompanyManagement {
     public static void main(String[] args) {
@@ -13,13 +14,36 @@ public class CompanyManagement {
 
         findEmpByID(dao);
 
+        //update
+        updateEmp(dao);
+
+
     }//main
 
-    private static void findEmpByID(EmployeeDAOImpl dao) {
+    private static void updateEmp(EmployeeDAOImpl dao) {
+        //search employee data
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter an employee id?:");
+        String id = sc.nextLine();
+
+        Employee emp = dao.findById(id);
+        //update
+        System.out.println("Employee info: ");
+        System.out.println(emp.toString());
+        //edit
+        System.out.print("Enter new position");
+        String p =sc.nextLine();
+        emp.setPosition(p);
+        //update new data
+        dao.UpdateEmp(emp);
+    }
+
+    private static Employee findEmpByID(EmployeeDAOImpl dao) {
         Employee emp = dao.findById("EMP005");
         if (emp != null){
             System.out.println(emp.toString());
         }
+        return emp;
     }
 
     private static void addNewEmp(EmployeeDAOImpl dao) {
